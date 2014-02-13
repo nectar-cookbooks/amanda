@@ -46,7 +46,7 @@ if platform_family?('rhel', 'fedora', 'debian') then
       action :install
     end
   end
-else if platform_family?('suse') then
+elsif platform_family?('suse') then
   package 'amanda' do
     action :install
   end

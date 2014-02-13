@@ -1,0 +1,30 @@
+org "<%= @config_name %>"
+infofile "<%= @amanda_dir %>/state/curinfo"
+logdir "<%= @amanda_dir %>/state/log"
+indexdir "<%= @amanda_dir %>/state/index"
+dumpuser "<%= @amanda_user %>"
+
+tpchanger "chg-disk:<%= @amanda_dir %>/vtapes"
+labelstr "<%= @label %>[0-9][0-9]"
+autolabel "<%= @label %>%%" EMPTY VOLUME_ERROR
+tapecycle 4
+dumpcycle 3 days
+amrecover_changer "changer"
+
+tapetype "TEST-TAPE"
+define tapetype TEST-TAPE {
+  length 100 mbytes
+  filemark 4 kbytes
+}
+
+define dumptype simple-gnutar-local {
+    auth "local"
+    compress none
+    program "GNUTAR"
+}
+
+holdingdisk hd1 {
+    directory "<%= @amanda_dir %>/holding"
+    use 50 mbytes
+    chunksize 1 mbyte
+}

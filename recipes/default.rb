@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: amands
+# Cookbook Name:: amanda
 # Recipe:: default
 #
 # Copyright (c) 2014, The University of Queensland
@@ -33,28 +33,61 @@
 # Requires GNUplot and Awk (for amplot)
 # Requires readline library.
 
-if platform_family?("rhel", "fedora") then
-  package "amanda-server" do
-    action :install
+amanda_dir = node['amanda']['amanda_dir']
+
+if platform_family?('rhel', 'fedora', 'debian') then
+  if node['amanda']['install_client'] then
+    package 'amanda-server' do
+      action :install
+    end
   end
-  package "amanda-client" do
-    action :install
+  if node['amanda']['install_server'] then
+    package 'amanda-client' do
+      action :install
+    end
   end
-elsif platform_family?("debian") then
-  package "amanda" do
-    action :install
-  end
-  package "amanda-server" do
-    action :install
-  end
-  package "amanda-client" do
-    action :install
-  end
-else if platform_family?("suse") then
-  package "amanda" do
+else if platform_family?('suse') then
+  package 'amanda' do
     action :install
   end
 else 
-  raise "Teach me about your platform ..."
+  raise 'Teach me about your platform ...'
 end
 
+if platform_family?('fedora') then
+  amanda_user = 'amandabackup'
+else 
+  raise 'Teach me about your platform ...'
+end
+
+['vtapes/1','vtapes/2','vtapes/3','vtapes/4',
+ 'holding', 'state/curinfo', 'state/log', 'state/index'].each do |d|
+  dir = "#{amanda_dir}/#{d}"
+  directory dir do
+    owner amanda_user
+    recursive true
+  end
+end
+
+directory "/etc/amanda/#{config_name}" do
+  owner amanda_user
+  recursive true
+end
+
+template "/etc/amanda/#{config_name}/amanda.conf" do
+  source "amanda_conf.erb"
+  owner amanda_user
+  mode 0644
+  variables ({
+               'config_name' => config_name,
+               'amanda_user' => amanda_user,
+               'amanda_dir' => amanda_dir,
+               'label' => 'MyData'
+             })
+end
+
+cookbook_file "/etc/amanda/#{config_name}/disklist" do
+  source "disklist"
+  owner amanda_user
+  mode 0644
+end

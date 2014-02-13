@@ -34,6 +34,7 @@
 # Requires readline library.
 
 amanda_dir = node['amanda']['amanda_dir']
+config_name = node['amanda']['config_name']
 
 if platform_family?('rhel', 'fedora', 'debian') then
   if node['amanda']['install_client'] then

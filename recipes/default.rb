@@ -56,6 +56,8 @@ end
 
 if platform_family?('fedora') then
   amanda_user = 'amandabackup'
+elsif platform_family?('debian') then
+  amanda_user = 'backup'
 else 
   raise 'Teach me about your platform ...'
 end

@@ -72,6 +72,10 @@ end
   end
 end
 
+file "#{amanda_dir}/vtapes/state" do
+  owner amanda_user
+end
+
 directory "/etc/amanda/#{config_name}" do
   owner amanda_user
   recursive true

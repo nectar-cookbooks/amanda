@@ -63,7 +63,7 @@ else
   raise 'Teach me about your platform ...'
 end
 
-['vtapes', 'vtapes/0', 'vtapes/1', 'vtapes/2', 'vtapes/3', 'vtapes/4',
+['vtapes', 'vtapes/slot1', 'vtapes/slot2', 'vtapes/slot3', 'vtapes/slot4',
  'holding', 'state/curinfo', 'state/log', 'state/index'].each do |d|
   dir = "#{amanda_dir}/#{d}"
   directory dir do

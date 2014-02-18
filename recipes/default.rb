@@ -81,14 +81,24 @@ directory "/etc/amanda/#{config_name}" do
   recursive true
 end
 
+openstack_username = node['setup']['openstack_username']
+openstack_password = node['setup']['openstack_password']
+openstack_tenant_name = node['setup']['openstack_tenant_name']
+openstack_tenant_id = node['setup']['openstack_tenant_id']
+
 template "/etc/amanda/#{config_name}/amanda.conf" do
-  source "amanda_conf.erb"
+  source "amanda_conf_openstack.erb"
   owner amanda_user
   mode 0644
   variables ({
                'config_name' => config_name,
                'amanda_user' => amanda_user,
                'amanda_dir' => amanda_dir,
+               'openstack_username' => openstack_username,
+               'openstack_password' => openstack_password,
+               'openstack_tenant_name' => openstack_tenant_name,
+               'openstack_tenant_id' => openstack_tenant_id,
+               'object_store' => 'testing',
                'label' => 'MyData'
              })
 end

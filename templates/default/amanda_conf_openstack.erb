@@ -6,7 +6,7 @@ dumpuser "<%= @amanda_user %>"
 mailto "root"
 
 define changer openstack {
-    tpchanger "chg-multi:s3:<%= @object_store %>/DailySet/slot-{01,02,03,04,05,06,07,08,09,10}"
+    tpchanger "chg-multi:s3:<%= @object_store %>/slot-{01,02,03,04,05,06,07,08,09,10}"
     device_property "S3_SUBDOMAIN" "no"
     device_property "S3_SSL" "ON"
     device_property "S3_STORAGE_CLASS" "STANDARD"
@@ -26,7 +26,7 @@ labelstr "<%= @label %>[0-9][0-9]"
 autolabel "<%= @label %>%%" EMPTY VOLUME_ERROR
 tapecycle 10
 dumpcycle 3 days
-changerfile "swift-statefile"
+changerfile ""<%= @amanda_dir %>/swift/state"
 
 tapetype "Swift"
 define tapetype Swift {

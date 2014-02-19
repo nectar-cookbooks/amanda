@@ -33,7 +33,7 @@ define tapetype Swift {
 
 define dumptype simple-gnutar-remote {
     auth "ssh"
-    ssh_keys "/etc/amanda/<%= @config_name %>/ssh_key
+    ssh_keys "/etc/amanda/<%= @config_name %>/ssh_key"
     compress none
     program "GNUTAR"
 }

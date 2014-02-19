@@ -31,9 +31,8 @@ define tapetype Swift {
     length 100 gigabytes # Bucket size
 }
 
-define dumptype simple-gnutar-remote {
-    auth "ssh"
-    ssh_keys "/etc/amanda/<%= @config_name %>/ssh_key"
+define dumptype simple-gnutar-local {
+    auth "local"
     compress none
     program "GNUTAR"
 }

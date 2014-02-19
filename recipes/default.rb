@@ -64,7 +64,7 @@ else
 end
 
 ['vtapes', 'vtapes/slot1', 'vtapes/slot2', 'vtapes/slot3', 'vtapes/slot4',
- 'holding', 'state/curinfo', 'state/log', 'state/index'].each do |d|
+ 'swift', 'holding', 'state/curinfo', 'state/log', 'state/index'].each do |d|
   dir = "#{amanda_dir}/#{d}"
   directory dir do
     owner amanda_user
